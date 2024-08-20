@@ -1,8 +1,8 @@
 const express=require('express');
 const app=express();
 const port=3000;
-app.get('/users',(req,res)=>{
-    console.log('GET /users');
+app.post('/users',(req,res)=>{
+    console.log(req.body);
     res.send('Hello World');
 });
 app.post('/',(req,res)=>{
