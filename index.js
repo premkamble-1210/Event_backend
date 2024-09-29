@@ -237,11 +237,14 @@ app.post('/api/Allenvent', async (req, res) => {
     try {
         let events;
         if (filters.length === 0) {
-            // No filters, return all events
-            events = await Eventinfo.find().exec();
+            // No filters, return all events in random order
+            events = await Eventinfo.aggregate([{ $sample: { size: await Eventinfo.countDocuments() } }]).exec();
         } else {
-            // Filter events based on the provided departments
-            events = await Eventinfo.find({ dept: { $in: filters } }).exec();
+            // Filter events based on the provided departments and return in random order
+            events = await Eventinfo.aggregate([
+                { $match: { dept: { $in: filters } } }, 
+                { $sample: { size: await Eventinfo.countDocuments({ dept: { $in: filters } }) } } // Adjust size dynamically based on filter count
+            ]).exec();
         }
         return res.json(events); // Return resolved JSON
     } catch (error) {
@@ -249,6 +252,7 @@ app.post('/api/Allenvent', async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 });
+
 
 // const Eventinfo = require('./path/to/eventModel'); // Update the path as needed
 
