@@ -18,6 +18,10 @@ const user = new mongoose.Schema({
         type: Boolean,
         required: true
     },
+    superAdmin:{
+        type:Boolean,
+        required: true
+    },
     dept: {
         type: String,
         required: true
