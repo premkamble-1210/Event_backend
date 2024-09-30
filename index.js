@@ -201,6 +201,7 @@ app.post('/api/Newuser', async (req, res) => {
     try {
         console.log(req.body);
         const { PRN, password, name, Admin, mobileno, value } = req.body;
+        const superAdmin=false;
 
         // Check if user already exists
         const chech_new_user = await userinfo.findOne({ PRN });
@@ -217,6 +218,7 @@ app.post('/api/Newuser', async (req, res) => {
             Admin,
             dept: value,
             Contact: mobileno,
+            superAdmin:superAdmin,
         });
 
         // Save user to database
