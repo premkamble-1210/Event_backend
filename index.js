@@ -261,7 +261,7 @@ app.post('/api/Allenvent', async (req, res) => {
 app.post('/api/AddEvent', async (req, res) => {
     try {
         console.log(req.body);
-        const { name, description, pyment_upi_id, date, time, Rules, backimg, Amount, organizer ,monthNames,dept} = req.body;
+        const { name, description, pyment_upi_id, date, time, Rules, backimg, Amount, organizer ,monthNames,dept,Contact} = req.body;
 
         // Validate input
         if (!name || !description || !pyment_upi_id || !date || !Amount || !organizer) {
@@ -283,7 +283,7 @@ app.post('/api/AddEvent', async (req, res) => {
             time: time || '10:00-17:00', // Default time if not provided
             organizer: organizer,
             monthNames:monthNames,
-            contact: 'default contact' // Optional or handle contact if necessary
+            contact: Contact // Optional or handle contact if necessary
         });
 
         // Save the event to the database
