@@ -235,7 +235,18 @@ app.post('/Admin_chat', async (req, res) => {
     }
 });
 
+// 
+app.get('/adminchats/refress', async(req, res) => {
+    const id ='66fcd83775a79a897887f283';
+    console.log(id);
+    const Newchats = await AdminMessage.findById(id);
+    const chats = Newchats.messages;
+    console.log(chats);
 
+    res.json({ status: 'ok', chats });
+   
+});
+// 
 app.post('/api/Newuser', async (req, res) => {
     try {
         console.log(req.body);
