@@ -199,12 +199,10 @@ app.post('/chat_add/:id', async (req, res) => {
     }
 });
 
-app.post('/Admin_chat',async (req,res)={
-    console.log(req.body);
-    res.json({ status: 'ok' });
-    
-    
-})
+app.post('/Admin_chat', async (req, res) => {  // Change '=' to '=>'
+    console.log(req.body);  // This will log the incoming request body
+    res.json({ status: 'ok' });  // Sends a JSON response
+});
 
 app.post('/api/Newuser', async (req, res) => {
     try {
