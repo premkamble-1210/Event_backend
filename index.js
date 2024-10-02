@@ -201,6 +201,32 @@ app.post('/chat_add/:id', async (req, res) => {
 
 app.post('/Admin_chat', async (req, res) => {  // Change '=' to '=>'
     console.log(req.body);  // This will log the incoming request body
+    // 
+    try {
+        // Create a new message object
+        const newMessage = req.body;
+
+        // Find the first AdminMessage document (create if none exists)
+        let adminMessages = await AdminMessage.findOne();
+
+        if (!adminMessages) {
+            // If no AdminMessage exists, create a new one
+            adminMessages = new AdminMessage({ messages: [] });
+        }
+
+        // Add the new message to the messages array
+        adminMessages.messages.push(newMessage);
+
+        // Save the updated document
+        await adminMessages.save();
+
+        res.status(201).json({ status: 'ok', adminMessages });
+    } catch (error) {
+        console.error('Error adding message:', error);
+        res.status(500).json({ status: 'error', message: 'Internal server error' });
+    }
+    // 
+    
     res.json({ status: 'ok' });  // Sends a JSON response
 });
 
