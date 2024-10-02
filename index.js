@@ -8,6 +8,8 @@ const DB = "mongodb+srv://prem1210:prem123@cluster0.cwsoi.mongodb.net/?retryWrit
 const Eventinfo =require('./Events');
 const userinfo =require('./User');
 const Event_img =require('./Slider_img');
+const AdminMessage = require('./Adminchat');
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const connection =async()=>{
     mongoose.connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -196,6 +198,13 @@ app.post('/chat_add/:id', async (req, res) => {
         res.status(500).json({ status: 'error', message: 'Internal server error' });
     }
 });
+
+app.post('/Admin_chat',async (req,res)={
+    console.log(req.body);
+    res.json({ status: 'ok' });
+    
+    
+})
 
 app.post('/api/Newuser', async (req, res) => {
     try {
