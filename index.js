@@ -199,12 +199,18 @@ app.post('/chat_add/:id', async (req, res) => {
     }
 });
 
-app.post('/Admin_chat', async (req, res) => {  // Change '=' to '=>'
-    console.log(req.body);  // This will log the incoming request body
-    // 
+app.post('/Admin_chat', async (req, res) => {
+    console.log(req.body);  // Log the incoming request body for debugging
+
     try {
+        // Validate that 'author' is present in the request body
+        const { message, author, admin } = req.body;
+        if (!author) {
+            return res.status(400).json({ status: 'error', message: 'Author is required' });
+        }
+
         // Create a new message object
-        const newMessage = req.body;
+        const newMessage = { message, author, admin };
 
         // Find the first AdminMessage document (create if none exists)
         let adminMessages = await AdminMessage.findOne();
@@ -220,15 +226,15 @@ app.post('/Admin_chat', async (req, res) => {  // Change '=' to '=>'
         // Save the updated document
         await adminMessages.save();
 
+        // Send the success response
         res.status(201).json({ status: 'ok', adminMessages });
+
     } catch (error) {
         console.error('Error adding message:', error);
         res.status(500).json({ status: 'error', message: 'Internal server error' });
     }
-    // 
-    
-    res.json({ status: 'ok' });  // Sends a JSON response
 });
+
 
 app.post('/api/Newuser', async (req, res) => {
     try {
